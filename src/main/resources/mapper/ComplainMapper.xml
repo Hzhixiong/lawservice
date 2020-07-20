@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lut.demo.mapper.ComplainMapper">
+  <resultMap id="BaseResultMap" type="com.lut.demo.bean.Complain">
+    <id column="complainid" jdbcType="INTEGER" property="complainid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="applyid" jdbcType="INTEGER" property="applyid" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="statsus" jdbcType="VARCHAR" property="statsus" />
+    <result column="submitdate" jdbcType="DATE" property="submitdate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    complainid, userid, applyid, introduce, statsus, submitdate
+  </sql>
+  <select id="selectByExample" parameterType="com.lut.demo.bean.ComplainExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from complain
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from complain
+    where complainid = #{complainid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from complain
+    where complainid = #{complainid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lut.demo.bean.ComplainExample">
+    delete from complain
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lut.demo.bean.Complain">
+    insert into complain (complainid, userid, applyid, 
+      introduce, statsus, submitdate
+      )
+    values (#{complainid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{applyid,jdbcType=INTEGER}, 
+      #{introduce,jdbcType=VARCHAR}, #{statsus,jdbcType=VARCHAR}, #{submitdate,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lut.demo.bean.Complain">
+    insert into complain
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="complainid != null">
+        complainid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="applyid != null">
+        applyid,
+      </if>
+      <if test="introduce != null">
+        introduce,
+      </if>
+      <if test="statsus != null">
+        statsus,
+      </if>
+      <if test="submitdate != null">
+        submitdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="complainid != null">
+        #{complainid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="applyid != null">
+        #{applyid,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="statsus != null">
+        #{statsus,jdbcType=VARCHAR},
+      </if>
+      <if test="submitdate != null">
+        #{submitdate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lut.demo.bean.ComplainExample" resultType="java.lang.Long">
+    select count(*) from complain
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update complain
+    <set>
+      <if test="record.complainid != null">
+        complainid = #{record.complainid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyid != null">
+        applyid = #{record.applyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.introduce != null">
+        introduce = #{record.introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statsus != null">
+        statsus = #{record.statsus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitdate != null">
+        submitdate = #{record.submitdate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update complain
+    set complainid = #{record.complainid,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=INTEGER},
+      applyid = #{record.applyid,jdbcType=INTEGER},
+      introduce = #{record.introduce,jdbcType=VARCHAR},
+      statsus = #{record.statsus,jdbcType=VARCHAR},
+      submitdate = #{record.submitdate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lut.demo.bean.Complain">
+    update complain
+    <set>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="applyid != null">
+        applyid = #{applyid,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null">
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="statsus != null">
+        statsus = #{statsus,jdbcType=VARCHAR},
+      </if>
+      <if test="submitdate != null">
+        submitdate = #{submitdate,jdbcType=DATE},
+      </if>
+    </set>
+    where complainid = #{complainid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lut.demo.bean.Complain">
+    update complain
+    set userid = #{userid,jdbcType=INTEGER},
+      applyid = #{applyid,jdbcType=INTEGER},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      statsus = #{statsus,jdbcType=VARCHAR},
+      submitdate = #{submitdate,jdbcType=DATE}
+    where complainid = #{complainid,jdbcType=INTEGER}
+  </update>
+</mapper>

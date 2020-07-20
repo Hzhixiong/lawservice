@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lut.demo.mapper.LegalknowledgeMapper">
+  <resultMap id="BaseResultMap" type="com.lut.demo.bean.Legalknowledge">
+    <id column="lawid" jdbcType="INTEGER" property="lawid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="submitdate" jdbcType="DATE" property="submitdate" />
+    <result column="pictureurl" jdbcType="VARCHAR" property="pictureurl" />
+    <result column="clicks" jdbcType="INTEGER" property="clicks" />
+    <result column="lawyerid" jdbcType="INTEGER" property="lawyerid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    lawid, title, content, submitdate, pictureurl, clicks, lawyerid
+  </sql>
+  <select id="selectByExample" parameterType="com.lut.demo.bean.LegalknowledgeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from legalknowledge
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from legalknowledge
+    where lawid = #{lawid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from legalknowledge
+    where lawid = #{lawid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lut.demo.bean.LegalknowledgeExample">
+    delete from legalknowledge
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lut.demo.bean.Legalknowledge">
+    insert into legalknowledge (lawid, title, content, 
+      submitdate, pictureurl, clicks, 
+      lawyerid)
+    values (#{lawid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{submitdate,jdbcType=DATE}, #{pictureurl,jdbcType=VARCHAR}, #{clicks,jdbcType=INTEGER}, 
+      #{lawyerid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lut.demo.bean.Legalknowledge">
+    insert into legalknowledge
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lawid != null">
+        lawid,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="submitdate != null">
+        submitdate,
+      </if>
+      <if test="pictureurl != null">
+        pictureurl,
+      </if>
+      <if test="clicks != null">
+        clicks,
+      </if>
+      <if test="lawyerid != null">
+        lawyerid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lawid != null">
+        #{lawid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="submitdate != null">
+        #{submitdate,jdbcType=DATE},
+      </if>
+      <if test="pictureurl != null">
+        #{pictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="clicks != null">
+        #{clicks,jdbcType=INTEGER},
+      </if>
+      <if test="lawyerid != null">
+        #{lawyerid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lut.demo.bean.LegalknowledgeExample" resultType="java.lang.Long">
+    select count(*) from legalknowledge
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update legalknowledge
+    <set>
+      <if test="record.lawid != null">
+        lawid = #{record.lawid,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitdate != null">
+        submitdate = #{record.submitdate,jdbcType=DATE},
+      </if>
+      <if test="record.pictureurl != null">
+        pictureurl = #{record.pictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clicks != null">
+        clicks = #{record.clicks,jdbcType=INTEGER},
+      </if>
+      <if test="record.lawyerid != null">
+        lawyerid = #{record.lawyerid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update legalknowledge
+    set lawid = #{record.lawid,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      submitdate = #{record.submitdate,jdbcType=DATE},
+      pictureurl = #{record.pictureurl,jdbcType=VARCHAR},
+      clicks = #{record.clicks,jdbcType=INTEGER},
+      lawyerid = #{record.lawyerid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lut.demo.bean.Legalknowledge">
+    update legalknowledge
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="submitdate != null">
+        submitdate = #{submitdate,jdbcType=DATE},
+      </if>
+      <if test="pictureurl != null">
+        pictureurl = #{pictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="clicks != null">
+        clicks = #{clicks,jdbcType=INTEGER},
+      </if>
+      <if test="lawyerid != null">
+        lawyerid = #{lawyerid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where lawid = #{lawid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lut.demo.bean.Legalknowledge">
+    update legalknowledge
+    set title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      submitdate = #{submitdate,jdbcType=DATE},
+      pictureurl = #{pictureurl,jdbcType=VARCHAR},
+      clicks = #{clicks,jdbcType=INTEGER},
+      lawyerid = #{lawyerid,jdbcType=INTEGER}
+    where lawid = #{lawid,jdbcType=INTEGER}
+  </update>
+</mapper>

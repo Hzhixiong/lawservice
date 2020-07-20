@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lut.demo.mapper.PwsMapper">
+  <resultMap id="BaseResultMap" type="com.lut.demo.bean.Pws">
+    <id column="pwsid" jdbcType="INTEGER" property="pwsid" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="pw" jdbcType="VARCHAR" property="pw" />
+    <result column="authority" jdbcType="INTEGER" property="authority" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pwsid, account, pw, authority
+  </sql>
+  <select id="selectByExample" parameterType="com.lut.demo.bean.PwsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pws
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pws
+    where pwsid = #{pwsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pws
+    where pwsid = #{pwsid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lut.demo.bean.PwsExample">
+    delete from pws
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lut.demo.bean.Pws">
+    insert into pws (pwsid, account, pw, 
+      authority)
+    values (#{pwsid,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{pw,jdbcType=VARCHAR}, 
+      #{authority,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lut.demo.bean.Pws">
+    insert into pws
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pwsid != null">
+        pwsid,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="pw != null">
+        pw,
+      </if>
+      <if test="authority != null">
+        authority,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pwsid != null">
+        #{pwsid,jdbcType=INTEGER},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="pw != null">
+        #{pw,jdbcType=VARCHAR},
+      </if>
+      <if test="authority != null">
+        #{authority,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lut.demo.bean.PwsExample" resultType="java.lang.Long">
+    select count(*) from pws
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pws
+    <set>
+      <if test="record.pwsid != null">
+        pwsid = #{record.pwsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.account != null">
+        account = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pw != null">
+        pw = #{record.pw,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authority != null">
+        authority = #{record.authority,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pws
+    set pwsid = #{record.pwsid,jdbcType=INTEGER},
+      account = #{record.account,jdbcType=VARCHAR},
+      pw = #{record.pw,jdbcType=VARCHAR},
+      authority = #{record.authority,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lut.demo.bean.Pws">
+    update pws
+    <set>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="pw != null">
+        pw = #{pw,jdbcType=VARCHAR},
+      </if>
+      <if test="authority != null">
+        authority = #{authority,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pwsid = #{pwsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lut.demo.bean.Pws">
+    update pws
+    set account = #{account,jdbcType=VARCHAR},
+      pw = #{pw,jdbcType=VARCHAR},
+      authority = #{authority,jdbcType=INTEGER}
+    where pwsid = #{pwsid,jdbcType=INTEGER}
+  </update>
+</mapper>
